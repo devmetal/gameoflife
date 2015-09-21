@@ -52,7 +52,7 @@ func NewGameOfLifeServer() *GameOfLifeServer {
   }
   defer file.Close()
 
-  lm := gol.NewLifeMatrix(file, 10)
+  lm := gol.NewLifeMatrix(file, 100)
   return &GameOfLifeServer{lm}
 }
 
