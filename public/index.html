@@ -3,11 +3,60 @@
   <head>
     <meta charset="utf-8">
     <title>Hello From Google Go</title>
+    
+    <!--<link href="app.css" rel="stylesheet">-->
+    <style>
+      
+      html {
+        height: 100%;
+      }
+      
+      body {
+	margin: 0;
+	padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#main {
+	width: 100%;
+	height: 100%;
+	background-color: #CFCFCF;
+}
+
+#main > #GameOfLife {
+  height: 100%;
+}
+
+#main > #GameOfLife::after {
+	clear: left;
+	display: block;
+}
+
+#GameOfLife .cell {
+	float: left;
+}
+
+#GameOfLife .cell.live {
+	background-color: #5C832F;
+}
+
+#GameOfLife .cell.dead {
+	background-color: #363942;
+}
+    </style> 
+    
+    <script src="xhr.js"></script>
     <script src="https://fb.me/react-with-addons-0.13.3.js"></script>
     <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+    <script type="text/jsx" src="app.js"></script>
     
     <script type="text/jsx">
-    //App init code
+      var target = document.querySelector("#main");
+      React.render(
+        <GameOfLife n={100}/>,
+        target
+      );
     </script>
     
   </head>

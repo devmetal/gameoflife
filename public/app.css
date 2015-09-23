@@ -1,0 +1,27 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#main {
+	width: 100%;
+	height: 100%;
+	background-color: #CFCFCF;
+}
+
+#main > #GameOfLife::after {
+	clear: left;
+	display: block;
+}
+
+#GameOfLife .cell {
+	float: left;
+}
+
+#GameOfLife .cell.live {
+	background-color: #33FF00;
+}
+
+#GameOfLife .cell.dead {
+	background-color: #CFCFCF;
+}
