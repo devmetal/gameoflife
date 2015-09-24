@@ -19,12 +19,24 @@ func loadPage(file string) ([]byte, error) {
 
 type GameOfLifeServer struct {
   life *gol.LifeMatrix
+  buffer <-chan byte[]
+  signal <-chan int
 }
 
 type StaticFilesServer struct {
   filesPath string
 }
 
+func (srv *GameOfLifeServer) Buffering(signal <- chan int, int n) {
+  for {
+    <- signal
+    for i := 0; i < n; i++ {
+      srv.life.Iter()
+      srv.buffer <- srv.life.JsonString()
+    }
+  }
+}
+ 
 func (srv *GameOfLifeServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
   srv.life.Iter()
   json, _ := srv.life.JsonString()
@@ -53,7 +65,9 @@ func NewGameOfLifeServer() *GameOfLifeServer {
   defer file.Close()
 
   lm := gol.NewLifeMatrix(file, 100)
-  return &GameOfLifeServer{lm}
+  buf := make(chan byte[], 30)
+  sig := make(chan int)
+  return &GameOfLifeServer{lm, buf}
 }
 
 func NewStaticFileServer() *StaticFilesServer {
